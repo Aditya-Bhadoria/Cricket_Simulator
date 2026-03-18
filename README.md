@@ -20,6 +20,11 @@ All execute as concurrent POSIX threads.
 - `pitch_mutex` → Protects the pitch (Critical Section)  
 - `score_mutex` → Prevents dirty reads/writes to the scoreboard  
 - `crease_sem` (Semaphore) → Limits the crease capacity to exactly two batsmen  
+- `Global_Score` → Tracks total runs, strictly protected by `score_mutex` to prevent race conditions
+- `pitch_status` → Indicates whether pitch currently contains an active delivery or not
+- `ball_in_air` → Triggers Fielder threads to wake up and attempt a catch
+- `match_over` → The global termination flag
+- `wickets_fallen` → Tracks number of terminated Batsman processes
 
 ---
 
