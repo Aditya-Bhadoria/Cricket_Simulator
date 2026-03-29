@@ -88,7 +88,7 @@ void apply_sjf_scheduling(BatsmanData arr[], int n) {
     printf("[Scheduler] Applied SJF. Tail-enders will bat first.\n");
 }
 
-int simulate_delivery() {
+int simulate_delivery1to3() {   // batsmen 1 to 3
     int r = rand() % 100;
     if (r < 3) return -3;       // 3%  wide
     if (r < 6) return -4;       // 3%  no Ball
@@ -101,8 +101,36 @@ int simulate_delivery() {
     if (r < 97) return -1;      // 3%  bowled
     return -2;                  // 3%  catch out
 
-    // below we added additional 5% prob of run out if 1,2,3 runs taken
-    // so run out prob = 5% of 53% = 2.65% approx
+    // below we added additional 7% prob of run out if 1,2,3 runs taken
+    // so run out prob = 7% of 53% = 3.71% approx
+}
+
+int simulate_delivery4to7() {   // batsmen 4 to 7
+    int r = rand() % 100;
+    if (r < 3) return -3;       // 3%  wide
+    if (r < 6) return -4;       // 3%  no Ball
+    if (r < 31) return 0;       // 25% dot ball
+    if (r < 60) return 1;       // 29% 1 run
+    if (r < 75) return 2;       // 15% 2 runs
+    if (r < 78) return 3;       // 3%  3 runs
+    if (r < 85) return 4;       // 7%  4 runs
+    if (r < 88) return 6;       // 3%  6 runs
+    if (r < 94) return -1;      // 6%  bowled
+    return -2;                  // 6%  catch out
+}
+
+int simulate_delivery8to11() {  // batsmen 8 to 11
+    int r = rand() % 100;
+    if (r < 3) return -3;       // 3%  wide
+    if (r < 6) return -4;       // 3%  no Ball
+    if (r < 31) return 0;       // 25% dot ball
+    if (r < 58) return 1;       // 27% 1 run
+    if (r < 68) return 2;       // 10% 2 runs
+    if (r < 71) return 3;       // 3%  3 runs
+    if (r < 77) return 4;       // 6%  4 runs
+    if (r < 80) return 6;       // 3%  6 runs
+    if (r < 90) return -1;      // 10% bowled
+    return -2;                  // 10% catch out
 }
 
 
@@ -296,7 +324,14 @@ void* batsman(void* arg) {
             break;
         }
         
-        int outcome = simulate_delivery(); 
+        int outcome;
+        if (data->id >= 1 && data->id <= 3) {
+            outcome = simulate_delivery1to3();
+        } else if (data->id >= 4 && data->id <= 7) {
+            outcome = simulate_delivery4to7();
+        } else {
+            outcome = simulate_delivery8to11();
+        }
         
         pthread_mutex_lock(&score_mutex);
         if(outcome == -3 || outcome == -4){
