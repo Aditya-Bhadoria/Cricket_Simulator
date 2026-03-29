@@ -378,7 +378,7 @@ void* batsman(void* arg) {
             }
             pthread_mutex_unlock(&score_mutex);
 
-            if((outcome == 1 || outcome == 2 || outcome == 3) && (rand() % 100 < 5)) {
+            if((outcome == 1 || outcome == 2 || outcome == 3) && (rand() % 100 < 7)) {
                 Allocation[0][0] = 1; Request[0][1] = 1; 
                 Allocation[1][1] = 1; Request[1][0] = 1; 
                 
