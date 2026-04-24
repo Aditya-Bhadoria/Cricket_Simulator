@@ -501,7 +501,7 @@ int main() {
         team[i].burst_time = burst_estimates[i];
     }
 
-    apply_sjf_scheduling(team, 11);
+    // apply_sjf_scheduling(team, 11);
 
     pthread_create(&umpire_thread, NULL, umpire_thread_func, NULL);
     for(int i=0; i<10; i++) pthread_create(&fielder_threads[i], NULL, fielder, &fielder_ids[i]);
